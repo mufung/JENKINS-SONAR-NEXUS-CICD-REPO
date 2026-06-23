@@ -10,5 +10,11 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/njokadeclan/JENKS-PROJECT1.git'
             }
         }
+        stage("unit test") {
+
+            steps{
+                sh'mvn test'
+            }
+        }
     }
 }
