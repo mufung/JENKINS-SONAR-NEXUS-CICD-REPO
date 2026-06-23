@@ -1,0 +1,14 @@
+pipeline{
+
+    agent any
+
+    stages{
+
+        stage("continuous download") {
+
+            steps{
+                git branch: 'main', url: 'https://github.com/njokadeclan/JENKS-PROJECT1.git'
+            }
+        }
+    }
+}
