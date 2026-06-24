@@ -45,7 +45,6 @@ pipeline{
 
                 script{
                     waitForQualityGate abortPipeline: false, credentialsId: 'sonar-link'
-                }
             }
         }
         stage("uplaod artifact to nexus") {
@@ -53,7 +52,7 @@ pipeline{
             steps{
 
                 script{
-                    nexusArtifactUploader artifacts: [[artifactId: 'springboot', classifier: '', file: 'target/Uber.jar', type: 'jar']], credentialsId: 'nexus-auth', groupId: 'com.example', nexusUrl: '18.225.183.245:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'nexus-jenks', version: '1.0.0'
+                    nexusArtifactUploader artifacts: [[artifactId: 'springboot', classifier: '', file: 'target/Uber.jar', type: 'jar']], credentialsId: 'nexus-jenks', groupId: 'com.example', nexusUrl: '18.222.138.157:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'jenks-project', version: '1.0.0'
                 }
             }
         }
