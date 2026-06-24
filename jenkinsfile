@@ -67,5 +67,19 @@ pipeline{
                 }
             }
         }
+        stage("push image to dockerhub"){
+
+            steps{
+
+                script{
+                    withCredentials([string(credentialsId: 'docker_cred', variable: 'docker_cred')]) {
+                        sh 'docker login -u njokadeclan -p ${docker_cred}'
+                        sh 'docker tag myuber:latest njokadeclan/jenks-project1:my-first-project-image'
+                        sh 'docker push njokadeclan/jenks-project1:my-first-project-image'
+                    }
+
+                }
+            }
+        }
     }
 }
