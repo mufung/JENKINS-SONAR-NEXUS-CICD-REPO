@@ -7,14 +7,14 @@ pipeline{
         stage("continuous download") {
 
             steps{
-                git branch: 'main', url:   'https://github.com/njokadeclan/JENKS-PROJECT1.git'
+                git branch: 'main', url: 'https://github.com/njokadeclan/JENKS-PROJECT1.git'
             }
         }
         stage("unit test") {
 
-        steps{
-            sh'mvn test'
-        }
+            steps{
+                sh'mvn test'
+            }
         }
         stage("integration test"){
 
@@ -28,34 +28,34 @@ pipeline{
                 sh'mvn clean install'
             }
         }
-        stage("static test analysis"){
+        stage("static test analysis") {
 
             steps{
 
                 script{
-                    withSonarQubeEnv(credentialsId: 'sonar-link') {
+                     withSonarQubeEnv(credentialsId: 'sonar-link') {
                         sh 'mvn clean package sonar:sonar'
-                    }
+                     }
                 }
             }
         }
-        stage("quality gate analysis"){
+        stage("quality gate analysis") {
 
             steps{
 
                 script{
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-link'
+                  waitForQualityGate abortPipeline: false, credentialsId: 'sonar-link'  
+                }
             }
         }
-        stage("uplaod artifact to nexus") {
+        stage("uplaod artifact to nexus"){
 
             steps{
 
                 script{
-                    nexusArtifactUploader artifacts: [[artifactId: 'springboot', classifier: '', file: 'target/Uber.jar', type: 'jar']], credentialsId: 'nexus-jenks', groupId: 'com.example', nexusUrl: '18.222.138.157:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'jenks-project', version: '1.0.0'
+                  nexusArtifactUploader artifacts: [[artifactId: 'springboot', classifier: '', file: 'target/Uber.jar', type: 'jar']], credentialsId: 'nexus-jenks', groupId: 'com.example', nexusUrl: '18.222.138.157:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'jenks-project', version: '1.0.0'  
                 }
             }
         }
-
     }
 }
